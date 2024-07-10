@@ -1,0 +1,26 @@
+package com.workflow.engine.repository;
+
+import com.workflow.engine.entity.TaskAssignment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface TaskAssignmentRepository extends JpaRepository<TaskAssignment, Long> {
+
+    List<TaskAssignment> findByAssigneeAndStatus(String assignee, TaskAssignment.Status status);
+
+    List<TaskAssignment> findByProcessInstanceId(String processInstanceId);
+
+    /**
+     * Formats a timestamp for logging purposes.
+     * @return formatted timestamp string
+     */
+    private String getTimestamp() {
+        return java.time.LocalDateTime.now()
+            .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+}

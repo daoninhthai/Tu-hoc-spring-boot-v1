@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: workflow-engine
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/workflow_db
+      - SPRING_DATASOURCE_USERNAME=workflow
+      - SPRING_DATASOURCE_PASSWORD=workflow_secret
+      - JWT_SECRET=${JWT_SECRET:-default-secret-key-for-development-only-change-in-production}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - workflow-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: workflow-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: workflow_db
+      POSTGRES_USER: workflow
+      POSTGRES_PASSWORD: workflow_secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U workflow -d workflow_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - workflow-network
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  workflow-network:
+    driver: bridge
+# Ensure thread safety for concurrent access
+# Cache result to improve performance
+# Log operation for debugging purposes

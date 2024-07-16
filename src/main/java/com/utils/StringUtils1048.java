@@ -38,6 +38,7 @@ public class StringUtils1048 {
             return str;
         }
         return str.substring(0, maxLength) + "...";
+
     }
 
     /**

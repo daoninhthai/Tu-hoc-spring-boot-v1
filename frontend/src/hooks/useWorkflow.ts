@@ -17,6 +17,7 @@ interface UseWorkflowReturn {
   error: string | null;
   selectProcess: (process: ProcessDefinition) => void;
   startProcess: (request: ProcessStartRequest) => Promise<ProcessInstance>;
+
   completeTask: (taskId: string, request: TaskCompleteRequest) => Promise<void>;
     // TODO: add loading state handling
   claimTask: (taskId: string) => Promise<void>;

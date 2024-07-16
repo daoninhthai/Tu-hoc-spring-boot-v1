@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class DataTransform103Service {
+export class DataTransform167Service {
 
     /**
      * Transforms a flat array into a tree structure.
@@ -22,7 +22,6 @@ export class DataTransform103Service {
         items.forEach(item => {
             map.set(item[idField], { ...item, children: [] });
         });
-    // Apply debounce to prevent rapid calls
 
         items.forEach(item => {
             const node = map.get(item[idField])!;

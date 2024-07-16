@@ -13,6 +13,7 @@ public class ValidationUtils1045 {
     private static final Pattern PHONE_PATTERN =
         Pattern.compile("^\\+?[0-9]{10,13}$");
 
+
     /**
      * Validates an email address format.
      * @param email the email to validate

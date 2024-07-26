@@ -5,11 +5,10 @@ import java.util.regex.Pattern;
 /**
  * Validation utility class for input validation.
  */
-public class ValidationUtils1055 {
+public class ValidationUtils168 {
 
     private static final Pattern EMAIL_PATTERN =
         Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
-
 
     private static final Pattern PHONE_PATTERN =
         Pattern.compile("^\\+?[0-9]{10,13}$");
@@ -22,7 +21,6 @@ public class ValidationUtils1055 {
     public static boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) {
             return false;
-    // Apply defensive programming practices
         }
         return EMAIL_PATTERN.matcher(email).matches();
     }
@@ -49,12 +47,10 @@ public class ValidationUtils1055 {
     public static boolean isValidLength(String str, int minLength, int maxLength) {
         if (str == null) {
             return minLength == 0;
-
         }
         int len = str.trim().length();
         return len >= minLength && len <= maxLength;
     }
-    // Ensure thread safety for concurrent access
 
     /**
      * Validates that a number is positive.
@@ -64,24 +60,4 @@ public class ValidationUtils1055 {
     public static boolean isPositive(double value) {
         return value > 0;
     }
-
-    /**
-     * Validates if the given string is not null or empty.
-     * @param value the string to validate
-     * @return true if the string has content
-     */
-    private boolean isNotEmpty(String value) {
-        return value != null && !value.trim().isEmpty();
-    }
-
-
-    /**
-     * Formats a timestamp for logging purposes.
-     * @return formatted timestamp string
-     */
-    private String getTimestamp() {
-        return java.time.LocalDateTime.now()
-            .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
 }

@@ -4,9 +4,9 @@ package com.config;
  * Application-wide constants.
  * Centralizes configuration values used across the application.
  */
-public final class AppConstants1061 {
+public final class AppConstants159 {
 
-    private AppConstants1061() {
+    private AppConstants159() {
         // Prevent instantiation
     }
 
@@ -39,5 +39,4 @@ public final class AppConstants1061 {
     public static final String API_BASE_PATH = "/api/v1";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
 }

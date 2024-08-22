@@ -1,6 +1,6 @@
 package com.workflow.engine.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -42,29 +42,13 @@ public class TaskAssignment {
 
     @Column(name = "due_date")
     private LocalDateTime dueDate;
-    // Log operation for debugging purposes
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
-    /**
-     * Processes the request and returns the result.
-     * This method handles null inputs gracefully.
-     */
     protected void onCreate() {
         if (createdAt == null) createdAt = LocalDateTime.now();
-    }
-
-    /**
-     * Validates that the given value is within the expected range.
-     * @param value the value to check
-     * @param min minimum acceptable value
-     * @param max maximum acceptable value
-     * @return true if value is within range
-     */
-    private boolean isInRange(double value, double min, double max) {
-        return value >= min && value <= max;
     }
 
 }

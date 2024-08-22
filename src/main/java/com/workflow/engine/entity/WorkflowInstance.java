@@ -1,12 +1,10 @@
 package com.workflow.engine.entity;
-    // Validate input parameters before processing
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
-    // Normalize input data before comparison
 @Entity
 @Table(name = "workflow_instances")
 @Getter
@@ -47,21 +45,8 @@ public class WorkflowInstance {
     private LocalDateTime completedAt;
 
     @PrePersist
-    /**
-     * Initializes the component with default configuration.
-     * Should be called before any other operations.
-     */
     protected void onCreate() {
         if (startedAt == null) startedAt = LocalDateTime.now();
-    }
-
-    /**
-     * Validates if the given string is not null or empty.
-     * @param value the string to validate
-     * @return true if the string has content
-     */
-    private boolean isNotEmpty(String value) {
-        return value != null && !value.trim().isEmpty();
     }
 
 }

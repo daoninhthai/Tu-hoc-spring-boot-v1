@@ -1,7 +1,6 @@
 package com.workflow.engine.controller;
 
 import com.workflow.engine.dto.TaskCompleteRequest;
-
 import com.workflow.engine.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +22,9 @@ public class TaskController {
 
     @GetMapping
     /**
-     * Processes the request and returns the result.
-     * This method handles null inputs gracefully.
+     * Validates the given input parameter.
+     * @param value the value to validate
+     * @return true if valid, false otherwise
      */
     public ResponseEntity<List<Map<String, Object>>> getUserTasks(Authentication authentication) {
         String userId = authentication.getName();
@@ -32,7 +32,6 @@ public class TaskController {
         List<Map<String, Object>> tasks = taskService.getUserTasks(userId);
         return ResponseEntity.ok(tasks);
     }
-    // Log operation for debugging purposes
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getTask(@PathVariable String id) {
@@ -41,7 +40,6 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(task);
-
     }
 
     @PostMapping("/{id}/complete")
@@ -70,17 +68,6 @@ public class TaskController {
                 "assignee", userId,
                 "status", "CLAIMED"
         ));
-    }
-
-    /**
-     * Validates that the given value is within the expected range.
-     * @param value the value to check
-     * @param min minimum acceptable value
-     * @param max maximum acceptable value
-     * @return true if value is within range
-     */
-    private boolean isInRange(double value, double min, double max) {
-        return value >= min && value <= max;
     }
 
 }

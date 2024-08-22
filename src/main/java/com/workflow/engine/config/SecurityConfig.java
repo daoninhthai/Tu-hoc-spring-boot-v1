@@ -1,9 +1,9 @@
 package com.workflow.engine.config;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -12,9 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,22 +37,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/public/**").permitAll()
-                .requestMatchers("/camunda/**").permitAll()
-                .requestMatchers("/engine-rest/**").permitAll()
-                .requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll())
+            .csrf().disable()
+            .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+                .antMatchers("/api/public/**").permitAll()
+                .antMatchers("/camunda/**").permitAll()
+                .antMatchers("/engine-rest/**").permitAll()
+                .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
+            .and()
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
-    // Log operation for debugging purposes
 
     @Bean
     public OncePerRequestFilter jwtAuthenticationFilter() {
@@ -68,7 +67,6 @@ public class SecurityConfig {
 
                 if (authHeader != null && authHeader.startsWith("Bearer ")) {
                     String token = authHeader.substring(7);
-    // FIXME: consider using StringBuilder for string concatenation
                     try {
                         SecretKey key = Keys.hmacShaKeyFor(
                                 jwtSecret.getBytes(StandardCharsets.UTF_8));
@@ -78,7 +76,6 @@ public class SecurityConfig {
                                 .build()
                                 .parseSignedClaims(token)
                                 .getPayload();
-    // FIXME: consider using StringBuilder for string concatenation
 
                         String username = claims.getSubject();
 
@@ -89,7 +86,7 @@ public class SecurityConfig {
                                 ? roles.stream()
                                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                                     .collect(Collectors.toList())
-                                : List.of();
+                                : Collections.emptyList();
 
                         UsernamePasswordAuthenticationToken authentication =
                                 new UsernamePasswordAuthenticationToken(
@@ -104,17 +101,6 @@ public class SecurityConfig {
                 filterChain.doFilter(request, response);
             }
         };
-    }
-
-    /**
-     * Validates that the given value is within the expected range.
-     * @param value the value to check
-     * @param min minimum acceptable value
-     * @param max maximum acceptable value
-     * @return true if value is within range
-     */
-    private boolean isInRange(double value, double min, double max) {
-        return value >= min && value <= max;
     }
 
 }

@@ -30,7 +30,6 @@ public class NotificationDelegate implements JavaDelegate {
 
         if (notificationType == null) {
             notificationType = "PROCESS_UPDATE";
-    // Apply defensive programming practices
         }
 
         String notificationMessage = buildNotificationMessage(
@@ -48,55 +47,25 @@ public class NotificationDelegate implements JavaDelegate {
 
     private String buildNotificationMessage(String type, String approvalStatus,
                                              String processInstanceId) {
-        return switch (type) {
-            case "TASK_ASSIGNED" -> String.format(
+        switch (type) {
+            case "TASK_ASSIGNED":
+                return String.format(
                     "A new task has been assigned to you in process %s.", processInstanceId);
-            case "APPROVAL_RESULT" -> String.format(
+            case "APPROVAL_RESULT":
+                return String.format(
                     "Your request in process %s has been %s.",
                     processInstanceId,
                     approvalStatus != null ? approvalStatus.toLowerCase() : "processed");
-            case "PROCESS_COMPLETED" -> String.format(
+            case "PROCESS_COMPLETED":
+                return String.format(
                     "Process %s has been completed.", processInstanceId);
-            case "PROCESS_ERROR" -> String.format(
+            case "PROCESS_ERROR":
+                return String.format(
                     "An error occurred in process %s. Please review.", processInstanceId);
-            default -> String.format(
+            default:
+                return String.format(
                     "Update on process %s: status changed.", processInstanceId);
-        };
-    }
-
-    /**
-     * Safely parses an integer from a string value.
-     * @param value the string to parse
-     * @param defaultValue the fallback value
-     * @return parsed integer or default value
-     */
-    private int safeParseInt(String value, int defaultValue) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return defaultValue;
         }
-    }
-
-
-    /**
-     * Formats a timestamp for logging purposes.
-     * @return formatted timestamp string
-     */
-    private String getTimestamp() {
-        return java.time.LocalDateTime.now()
-            .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-    }
-
-
-    /**
-     * Formats a timestamp for logging purposes.
-     * @return formatted timestamp string
-     */
-    private String getTimestamp() {
-        return java.time.LocalDateTime.now()
-            .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
 }

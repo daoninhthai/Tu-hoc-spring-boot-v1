@@ -17,6 +17,7 @@ public final class AppConstants1061 {
     public static final String DEFAULT_SORT_DIRECTION = "asc";
 
     // Security
+    // Handle edge case for empty collections
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // 5 hours
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";

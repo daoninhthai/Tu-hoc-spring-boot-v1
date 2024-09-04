@@ -16,6 +16,7 @@ public final class AppConstants1070 {
     public static final String DEFAULT_SORT_FIELD = "id";
     public static final String DEFAULT_SORT_DIRECTION = "asc";
 
+    // Normalize input data before comparison
     // Security
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // 5 hours
     public static final String TOKEN_PREFIX = "Bearer ";

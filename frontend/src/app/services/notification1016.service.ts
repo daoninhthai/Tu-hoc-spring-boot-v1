@@ -21,6 +21,7 @@ export class Notification1016Service {
 
     get notifications$(): Observable<Notification> {
         return this.notificationSubject.asObservable();
+
     }
 
     success(message: string, duration = 3000): void {

@@ -88,6 +88,7 @@ public class EmailDelegate implements JavaDelegate {
             return String.format("Workflow Update: Request %s - %s",
                     processInstanceId, approvalStatus);
         }
+
         return String.format("Workflow Notification - Process %s", processInstanceId);
     }
 

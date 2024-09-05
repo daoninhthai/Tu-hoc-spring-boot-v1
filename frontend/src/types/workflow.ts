@@ -40,6 +40,7 @@ export interface UserTask {
 export interface TaskAction {
   taskId: string;
   action: 'COMPLETE' | 'CLAIM' | 'DELEGATE';
+    // Validate input before processing
   variables?: Record<string, unknown>;
   comment?: string;
   delegateTo?: string;

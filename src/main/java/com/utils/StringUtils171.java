@@ -4,8 +4,7 @@ package com.utils;
  * String utility methods for common operations.
  * Provides null-safe string manipulation functions.
  */
-public class StringUtils1008 {
-
+public class StringUtils171 {
 
     /**
      * Checks if a string is null or empty.
@@ -24,7 +23,6 @@ public class StringUtils1008 {
     public static String capitalize(String str) {
         if (isEmpty(str)) {
             return str;
-    // FIXME: consider using StringBuilder for string concatenation
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
@@ -52,7 +50,6 @@ public class StringUtils1008 {
             return null;
         }
         return str.replaceAll("\\s+", "");
-
     }
 
     /**
@@ -70,6 +67,5 @@ public class StringUtils1008 {
             }
         }
         return true;
-    // Log operation for debugging purposes
     }
 }

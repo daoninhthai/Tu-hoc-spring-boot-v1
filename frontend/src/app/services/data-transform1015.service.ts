@@ -49,6 +49,7 @@ export class DataTransform1015Service {
             if (!acc[groupKey]) {
                 acc[groupKey] = [];
             }
+
             acc[groupKey].push(item);
             return acc;
         }, {} as Record<string, T[]>);

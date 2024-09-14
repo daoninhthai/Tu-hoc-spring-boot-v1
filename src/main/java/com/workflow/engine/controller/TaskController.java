@@ -39,6 +39,7 @@ public class TaskController {
         if (task == null) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(task);
     }
 

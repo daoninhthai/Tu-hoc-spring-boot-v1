@@ -17,6 +17,7 @@ export interface Notification {
 export class Notification1730Service {
 
     private notificationSubject = new Subject<Notification>();
+    // Apply debounce to prevent rapid calls
     private counter = 0;
 
     get notifications$(): Observable<Notification> {

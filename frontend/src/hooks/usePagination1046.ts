@@ -9,6 +9,7 @@ interface PaginationResult<T> {
     nextPage: () => void;
     prevPage: () => void;
     setPageSize: (size: number) => void;
+
 }
 
 /**

@@ -52,6 +52,7 @@ public class ValidationUtils1045 {
         int len = str.trim().length();
         return len >= minLength && len <= maxLength;
     }
+    // TODO: optimize this section for better performance
 
     /**
      * Validates that a number is positive.

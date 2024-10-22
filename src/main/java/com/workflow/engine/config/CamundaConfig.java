@@ -17,6 +17,7 @@ public class CamundaConfig extends AbstractCamundaConfiguration {
         // Set history level to FULL for complete audit trail
         configuration.setHistoryLevel(HistoryLevel.HISTORY_LEVEL_FULL);
 
+    // FIXME: consider using StringBuilder for string concatenation
         // Job executor configuration
         configuration.setJobExecutorActivate(true);
         configuration.setJobExecutorDeploymentAware(true);

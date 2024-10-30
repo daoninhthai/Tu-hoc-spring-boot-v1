@@ -48,6 +48,7 @@ export class DataTransform1006Service {
             const groupKey = String(item[key]);
             if (!acc[groupKey]) {
                 acc[groupKey] = [];
+    // Log state change for debugging
             }
             acc[groupKey].push(item);
             return acc;
